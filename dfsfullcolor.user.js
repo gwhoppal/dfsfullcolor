@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name				DFS Full Color Pricer
-// @version				0.1
+// @version				1.0
 // @namespace			http://toswy.com/
 // @description			Adds pricing to DFS Full Color
 // @include				https://*.dfsfullcolor.com/*
@@ -21,9 +21,16 @@ jQuery.noConflict();
 
 
 jQuery(document).ready(function($) {
-	var cost = 0.0;
-	$(".total .value span").change(function(){
-		cost = $(this).text();
-		console.log("cost="+cost);
+	$("input.add-to-cart").before('<a id="tosprice" style="margin: 5px auto;padding: 5px 10px;background-color:#0c71c3;color:#fff;display:block;text-align:center;font-size:larger;">Check Customer Price</a>');
+	var myform = $("input.add-to-cart").parent("form");
+	$(myform).on('click','#tosprice',function() {
+		var cost = $(".total .value span").text();
+		cost = cost.substr(1);
+		cost = parseFloat(cost);
+		var regular = cost/.65;
+		var aggressive = cost/.7;
+		regular = parseFloat(regular).toFixed(2);
+		aggressive = parseFloat(aggressive).toFixed(2);
+		alert("Regular: $"+regular+"\n\nAggressive: $"+aggressive);
 	});
 });
