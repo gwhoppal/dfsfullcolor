@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name				DFS Full Color Pricer
-// @version				1.0
+// @version				1.1
 // @namespace			http://toswy.com/
 // @description			Adds pricing to DFS Full Color
 // @include				https://*.dfsfullcolor.com/*
@@ -21,16 +21,50 @@ jQuery.noConflict();
 
 
 jQuery(document).ready(function($) {
-	$("input.add-to-cart").before('<a id="tosprice" style="margin: 5px auto;padding: 5px 10px;background-color:#0c71c3;color:#fff;display:block;text-align:center;font-size:larger;">Check Customer Price</a>');
+	$("input.add-to-cart").before('<a id="tosprice" style="margin: 5px auto;padding: 5px 10px;background-color:#0c71c3;color:#fff;display:block;text-align:center;font-size:larger;">Check Customer Price</a><div id="tospricetable"></div>');
 	var myform = $("input.add-to-cart").parent("form");
 	$(myform).on('click','#tosprice',function() {
+		var labels = ["40%","35%","30%","25%","20%","15%","10%"];
+		var prices = [];
 		var cost = $(".total .value span").text();
 		cost = cost.substr(1);
 		cost = parseFloat(cost);
-		var regular = cost/.65;
-		var aggressive = cost/.7;
-		regular = parseFloat(regular).toFixed(2);
-		aggressive = parseFloat(aggressive).toFixed(2);
-		alert("Regular: $"+regular+"\n\nAggressive: $"+aggressive);
+
+		prices[0] = cost/.6;
+		prices[0] = prices[0].toFixed(2);
+		prices[1] = cost/.65;
+		prices[1] = prices[1].toFixed(2);
+		prices[2] = cost/.7;
+		prices[2] = prices[2].toFixed(2);
+		prices[3] = cost/.75;
+		prices[3] = prices[3].toFixed(2);
+		prices[4] = cost/.8;
+		prices[4] = prices[4].toFixed(2);
+		prices[5] = cost/.85;
+		prices[5] = prices[5].toFixed(2);
+		prices[6] = cost/.9;
+		prices[6] = prices[6].toFixed(2);
+
+		pricetable = '<div class="table-caption"><div class="table-cell summary" style="border-radius:5px 5px 0 0 !important;">TOS Pricing</div></div><div class="table-body"><div class="table-cell summary">';
+
+		for (var i = 0; i < prices.length; i++) {
+			if (i == 0) {
+				divclass = "cost clearfix";
+			} else {
+				divclass = "shipping clearfix";
+			}
+
+            if (i === 1) {
+				divstyle = ' style="font-weight:700;color:#0c71c3;"';
+            } else {
+				divstyle = '';
+            }
+
+			pricetable += '<div class="'+divclass+'"'+divstyle+'><div class="item">'+labels[i]+'</div><div class="value">'+prices[i]+'</div></div>';
+		}
+
+		pricetable += '</div></div>';
+
+        $("#tospricetable").html(pricetable);
 	});
 });
