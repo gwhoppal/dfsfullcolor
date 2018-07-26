@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name				DFS Full Color Pricer
-// @version				1.1
+// @version				1.2
 // @namespace			http://toswy.com/
 // @description			Adds pricing to DFS Full Color
 // @include				https://*.dfsfullcolor.com/*
@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
 				divstyle = '';
             }
 
-			pricetable += '<div class="'+divclass+'"'+divstyle+'><div class="item">'+labels[i]+'</div><div class="value">'+prices[i]+'</div></div>';
+			pricetable += '<div class="'+divclass+'"'+divstyle+'><div class="item">'+labels[i]+'</div><div class="value">$'+prices[i]+'</div></div>';
 		}
 
 		pricetable += '</div></div>';
